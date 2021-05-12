@@ -4,7 +4,7 @@ WORKDIR /root
 
 # Install the required software
 RUN apt update
-RUN apt install -y beanstalkd supervisor
+RUN apt install -y beanstalkd supervisor net-tools
 
 # Copy supervisor config file
 COPY ./conf/beanstalkd.conf /etc/supervisor/conf.d/beanstalkd.conf
