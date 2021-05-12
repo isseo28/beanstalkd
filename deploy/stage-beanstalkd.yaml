@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beanstalkd-stage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beanstalkd-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: beanstalkd-app
+    spec:
+      containers:
+        - name: beanstalkd-app
+          image: acrsoldout.azurecr.io/sldt-co-ltd/soldout_webapp-test:latest
+          imagePullPolicy: Always
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                - /bin/sh
+                - -c 
+                - "/bin/echo 'options single-request-reopen' >> /etc/resolv.conf"
+          env:
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          resources:
+            limits:
+              memory: "1096Mi"
+              cpu: "1000m"
+          ports:
+            - containerPort: 11300
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "2"            
