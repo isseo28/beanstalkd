@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: beanstalkd-app
-          image: acrsoldout.azurecr.io/sldt-co-ltd/soldout_webapp-test:latest
+          image: acrsoldout.azurecr.io/isseo28/beanstalkd-stage-beanstalkd:latest
           imagePullPolicy: Always
           lifecycle:
             postStart:
