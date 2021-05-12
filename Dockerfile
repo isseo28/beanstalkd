@@ -13,4 +13,4 @@ COPY ./conf/beanstalkd.conf /etc/supervisor/conf.d/beanstalkd.conf
 EXPOSE 11300
 
 # Set the launch command
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
