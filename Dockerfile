@@ -6,8 +6,11 @@ WORKDIR /root
 RUN apt update
 RUN apt install -y beanstalkd supervisor
 
-# Copy config file
-COPY ./conf/beanstalkd /etc/default/beanstalkd
+# Copy supervisor config file
+COPY ./conf/beanstalkd.conf /etc/supervisor/conf.d/beanstalkd.conf
 
 # Expose the ports
 EXPOSE 11300
+
+# Set the launch command
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
