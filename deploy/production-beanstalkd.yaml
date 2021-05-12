@@ -35,7 +35,7 @@ spec:
                   fieldPath: status.hostIP
           resources:
             limits:
-              memory: "4096Mi"
+              memory: "4000Mi"
               cpu: "2000m"
           ports:
             - containerPort: 11300
