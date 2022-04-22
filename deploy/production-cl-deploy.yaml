@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: beanstalkd-cl-app
+spec:
+  selector:
+    matchLabels:
+      app: beanstalkd-cl-app
+  serviceName: beanstalkd-cl-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: beanstalkd-cl-app
+    spec:
+      containers:
+      - name: beanstalkd-cl-app
+        image: acrsoldout.azurecr.io/isseo28/beanstalkd-production-beanstalkd:latest
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c 
+              - "/bin/echo 'options single-request-reopen' >> /etc/resolv.conf"
+        resources:
+          limits:
+            memory: "4000Mi"
+            cpu: "2000m"
+        ports:
+          - containerPort: 11300
